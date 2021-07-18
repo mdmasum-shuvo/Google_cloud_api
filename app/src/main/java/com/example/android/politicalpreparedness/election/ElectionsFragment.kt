@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
@@ -20,7 +22,7 @@ class ElectionsFragment: Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onViewCreated()"
         }
-        ViewModelProvider(this, ElectionsViewModel.Factory(activity.application)).get(
+        ViewModelProvider(this, ElectionsViewModelFactory(activity.application)).get(
             ElectionsViewModel::class.java
         )
     }
@@ -38,14 +40,24 @@ class ElectionsFragment: Fragment() {
 
         binding.viewmodel = viewModel
         //TODO: Link elections to voter info
-
+        viewModel.navigateToElectionDetailScreen.observe(viewLifecycleOwner, Observer {
+            if (null != it) {
+                // Must find the NavController from the Fragment
+                this.findNavController()
+                    .navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(it))
+                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
+               viewModel.navigationCompleted()
+            }
+        })
         //TODO: Initiate recycler adapters
         binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListAdapter.OnClickListener{
-            //viewModel.displayElectionDetails(it)
+            viewModel.displayElectionDetail(it)
         })
 
         //TODO: Populate recycler adapters
-
+        binding.savedElectionRecycler.adapter = ElectionListAdapter(ElectionListAdapter.OnClickListener{
+           viewModel.displayElectionDetail(it)
+        })
        return binding.root
     }
 
