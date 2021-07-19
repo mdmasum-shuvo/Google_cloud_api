@@ -20,5 +20,6 @@
     <string name="zip">zip</string>
 
     <!-- TODO: Add necessary string values -->
-
+    <string name="permission_denied_explanation">You need to grant location permission in order to select the location.</string>
+    <string name="settings">Settings</string>
 </resources>

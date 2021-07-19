@@ -7,7 +7,7 @@
 
         <variable
             name="representative"
-            type="com.example.android.politicalpreparedness.network.models.RepresentativeResponse" />
+            type="com.example.android.politicalpreparedness.representative.model.Representative" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +25,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            loadImage="@{representative.official.photoUrl}"
             tools:src="@drawable/ic_profile" />
 
         <TextView

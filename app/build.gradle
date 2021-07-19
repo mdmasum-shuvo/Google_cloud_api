@@ -79,4 +79,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$version_room"
     // Location
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$version_glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$version_glide"
 }
