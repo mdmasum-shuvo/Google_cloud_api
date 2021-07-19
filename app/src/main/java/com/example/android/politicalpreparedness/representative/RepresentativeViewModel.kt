@@ -35,23 +35,20 @@ class RepresentativeViewModel : ViewModel() {
 
     //TODO: Create function get address from geo location
     fun searchRepresentetive(address: Address) {
-        viewModelScope.launch(Dispatchers.IO) {
+        if (address !=null){
+            viewModelScope.launch(Dispatchers.IO) {
 
+                try {
+                    val response =
+                        CivicsApi.retrofitService.getRepresentative(address.toFormattedString())
+                    val representatives = response.representatives
+                    _representatives.postValue(representatives)
 
-            try {
-                val networkRepresentativeResponse =
-                    CivicsApi.retrofitService.getRepresentative(address.toFormattedString())
+                } catch (e: Exception) {
 
-               val representatives = networkRepresentativeResponse.representatives
-
-                _representatives.postValue(representatives)
-                Log.d("ExceptionInGetRepresentatives", "")
-
-
-            } catch (e: Exception) {
-
-                Log.d("ExceptionInGetRepresentatives", e.toString())
+                }
             }
+
         }
     }
     //TODO: Create function to get address from individual fields

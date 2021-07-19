@@ -94,7 +94,6 @@ class DetailFragment : Fragment() {
                 val address = geoCodeLocation(lastLocation)
                 binding.address = address
                 val stateText = address.state
-                viewModel.searchRepresentetive(address)
 
                 if (stateText != "") {
                     val statesForSpinner = requireContext().resources.getStringArray(R.array.states)
